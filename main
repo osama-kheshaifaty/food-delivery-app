@@ -1,0 +1,54 @@
+// Load the necessary packages
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+// Initialize the Express app
+const app = express();
+app.use(bodyParser.json());
+app.use(cors());
+
+// Define an array to store the menu items
+let menu = [
+  {
+    id: 1,
+    name: 'Pizza',
+    description: 'A delicious, cheesy pizza.',
+    price: 12.99
+  },
+  {
+    id: 2,
+    name: 'Hamburger',
+    description: 'A juicy hamburger with all the fixings.',
+    price: 9.99
+  },
+  {
+    id: 3,
+    name: 'Salad',
+    description: 'A fresh and healthy salad.',
+    price: 7.99
+  }
+];
+
+// Define an array to store the order history
+let orderHistory = [];
+
+// Define the routes
+app.get('/menu', (req, res) => {
+  res.send(menu);
+});
+
+app.post('/order', (req, res) => {
+  let order = req.body;
+  orderHistory.push(order);
+  res.send(orderHistory);
+});
+
+app.get('/order-history', (req, res) => {
+  res.send(orderHistory);
+});
+
+// Start the server
+app.listen(3000, () => {
+  console.log('Food delivery app is listening on port 3000!');
+});
